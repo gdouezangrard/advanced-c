@@ -1,0 +1,5 @@
+The test program exercise Purify's watchpoints.
+It sets a watch-point on errno, clears it and then calls close with a
+bad file descriptor. On both the writes to errno, wpw's (watchpoint
+writes) should be triggered.
+

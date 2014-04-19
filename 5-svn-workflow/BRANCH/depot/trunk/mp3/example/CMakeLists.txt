@@ -1,0 +1,5 @@
+set(SRCS main.c)
+include_directories (${mp3_SOURCE_DIR}/src)
+link_directories (${mp3_BINARY_DIR}/src)
+add_executable (main ${SRCS})
+target_link_libraries (main mp3)

@@ -1,0 +1,84 @@
+diff -rupN statelib/CMakeLists.txt statelib2/CMakeLists.txt
+--- statelib/CMakeLists.txt	2015-02-10 17:25:59.856102944 +0100
++++ statelib2/CMakeLists.txt	2015-02-11 10:41:03.354580094 +0100
+@@ -1,6 +1,11 @@
+ cmake_minimum_required(VERSION 2.8.6)
+ project(state)
+ 
++IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
++    # Linux specific code
++    add_definitions(-DLINUX)
++ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
++
+ add_library (state SHARED src/state.c)
+ add_library (state_static STATIC src/state.c)
+ 
+diff -rupN statelib/demos/demo_menu.c statelib2/demos/demo_menu.c
+--- statelib/demos/demo_menu.c	2015-02-10 17:25:59.856102944 +0100
++++ statelib2/demos/demo_menu.c	2015-02-11 10:16:16.108716508 +0100
+@@ -79,6 +79,7 @@ int main(){
+     state_add_transition(machine,option_menu,option_EXIT, NULL);
+     state_add_transition(machine,option_menu,option_BACK, main_menu);
+     state_add_transition(machine,run,        run_FINISH,  main_menu);
++    state_print(machine);
+     state_start(machine,main_menu,&job);
+     state_free(machine);
+ }
+Binary files statelib/.git/index and statelib2/.git/index differ
+diff -rupN statelib/src/state.c statelib2/src/state.c
+--- statelib/src/state.c	2015-02-11 09:21:31.921723581 +0100
++++ statelib2/src/state.c	2015-02-11 10:40:38.486748780 +0100
+@@ -97,3 +97,43 @@ int state_start(struct StateMachine *mac
+         start=p->to;
+     }
+ }
++
++#ifdef LINUX
++#include<execinfo.h>
++#endif
++#include<stdio.h>
++#include<string.h>
++
++void state_print(struct StateMachine *machine){
++  printf("----------------\nstate machine:\n");
++  void *f;
++  char **b;
++  int l;
++  struct State *p=machine->list;
++  while(p!=NULL){
++#ifdef LINUX
++    f=p->from;
++    b=backtrace_symbols(&f, 1);
++    printf("%s",b[0]);
++    l=strlen(b[0]);
++    while(l<50) {printf(" "); l+=1;}
++    free(b);
++#else
++    printf("%p    ",p->from);
++#endif
++    printf("%d   =>   ",p->value);
++    if (p->to==NULL)
++      printf("NULL\n");
++    else{
++#ifdef LINUX
++      f=p->to;
++      b=backtrace_symbols(&f, 1);      
++      printf("%s\n",b[0]);       
++      free(b);
++#else
++      printf("%p\n",p->to);
++#endif
++    }
++    p=p->next;
++  }
++}
+diff -rupN statelib/src/state.h statelib2/src/state.h
+--- statelib/src/state.h	2015-02-11 09:21:50.841482316 +0100
++++ statelib2/src/state.h	2015-02-11 10:12:12.758552687 +0100
+@@ -63,4 +63,6 @@ int state_add_transition(struct StateMac
+ int state_start(struct StateMachine *machine,StateFunc start, void *data);
+ 
+ 
++void state_print(struct StateMachine *machine);
++
+ #endif

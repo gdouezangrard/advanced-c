@@ -1,0 +1,34 @@
+diff -Naur pg106_login_0.0/mp3.c pg106_login_0.1/mp3.c
+--- pg106_login_0.0/mp3.c	2012-02-19 21:33:56.000000000 +0100
++++ pg106_login_0.1/mp3.c	2014-03-13 09:46:23.030007312 +0100
+@@ -61,3 +61,14 @@
+ 	/*  Tout s'est bien passé  */
+ 	return (0);
+ }
++
++static int ficheAffiche(Mp3Entry* entry){
++    printf ("Le titre \"%s\" est de %s (album %s, annee %d).\n",
++                entry->title, entry->artist, entry->album,entry->year);
++    
++    return(0);
++}
++
++int repertAffiche(Mp3Lib *repert){
++	// a vous d'écrire le code
++}
+\ No newline at end of file
+diff -Naur pg106_login_0.0/mp3.h pg106_login_0.1/mp3.h
+--- pg106_login_0.0/mp3.h	2012-02-20 10:13:02.000000000 +0100
++++ pg106_login_0.1/mp3.h	2014-03-13 09:47:02.830007618 +0100
+@@ -46,8 +46,8 @@
+ int repertInit     (Mp3Lib * repert);
+ int repertCherche  (Mp3Lib * repert, char * titre, char *artiste, char *album, int *annee);
+ int repertAjoute   (Mp3Lib * repert, char * titre, char * artiste, char *album,int annee);
+-
+-
+-
++// affiche les entrées de la bibliothèque
++// retourne le nombre d'entrées affichées
++int repertAffiche(Mp3Lib *repert);
+ 
+ #endif /* MP3_H_ */

@@ -1,0 +1,61 @@
+diff -Naur version_0.0/main.c version_0.2/main.c
+--- version_0.0/main.c	2012-02-19 22:17:33.626243166 +0100
++++ version_0.2/main.c	2012-02-19 22:15:31.336243018 +0100
+@@ -22,18 +22,7 @@
+ 		titre[63] = '\0';
+ 
+ 		if (strcmp (titre, "+") == 0) {                 /* Si phase d'ajout */
+-			printf ("Ajout d'un nouveau titre\n");
+-			printf ("Entrez le titre : ");
+-			scanf  ("%" xstr(REPERT_CHAMP_TAILLE_1) "s", artiste);
+-			artiste[REPERT_CHAMP_TAILLE_1] = '\0';
+-			printf ("Entrez l'artiste : ");
+-			scanf  ("%" xstr(REPERT_CHAMP_TAILLE_1) "s", titre);
+-			titre[REPERT_CHAMP_TAILLE_1] = '\0';
+-			printf ("Entrez l'album : ");
+-			scanf  ("%" xstr(REPERT_CHAMP_TAILLE_1) "s", album);
+-			album[REPERT_CHAMP_TAILLE_1] = '\0';
+-			printf ("Entrez l'annee : ");
+-			scanf  ("%d", &annee);
++			repertSaisie(titre, artiste, album, &annee);
+ 
+ 			if (repertAjoute (&repert, artiste, titre,album,annee) != 0) /* Ajout de la nouvelle carte */
+ 				printf ("Désolé, je n'ai pas pu ajouter la fiche.\n");
+diff -Naur version_0.0/mp3.c version_0.2/mp3.c
+--- version_0.0/mp3.c	2012-02-19 21:33:56.000000000 +0100
++++ version_0.2/mp3.c	2012-02-19 22:17:21.246243150 +0100
+@@ -61,3 +61,22 @@
+ 	/*  Tout s'est bien passé  */
+ 	return (0);
+ }
++
++int repertSaisie(char* titre, char* artiste, char* album, int* annee)
++{
++	printf ("Ajout d'un nouveau titre\n");
++	printf ("Entrez le titre : ");
++	scanf  ("%" xstr(REPERT_CHAMP_TAILLE_1) "s", artiste);
++	artiste[REPERT_CHAMP_TAILLE_1] = '\0';
++	printf ("Entrez l'artiste : ");
++	scanf  ("%" xstr(REPERT_CHAMP_TAILLE_1) "s", titre);
++	titre[REPERT_CHAMP_TAILLE_1] = '\0';
++	printf ("Entrez l'album : ");
++	scanf  ("%" xstr(REPERT_CHAMP_TAILLE_1) "s", album);
++	album[REPERT_CHAMP_TAILLE_1] = '\0';
++	printf ("Entrez l'annee : ");
++	scanf  ("%d", annee);
++
++    return(0);
++}
++
+diff -Naur version_0.0/mp3.h version_0.2/mp3.h
+--- version_0.0/mp3.h	2012-02-19 21:36:22.000000000 +0100
++++ version_0.2/mp3.h	2012-02-19 22:06:55.000000000 +0100
+@@ -52,7 +52,7 @@
+ int repertInit     (Mp3Lib * repert);
+ int repertCherche  (Mp3Lib * repert, char * titre, char *artiste, char *album, int *annee);
+ int repertAjoute   (Mp3Lib * repert, char * titre, char * artiste, char *album,int annee);
+-
++int repertSaisie   (char* titre, char* artiste, char* album, int* annee);
+ 
+ 
+ 

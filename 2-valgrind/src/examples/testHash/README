@@ -1,0 +1,29 @@
+testHash:
+This example shows how easy it is to have programs work by accident,
+and how hard it is to write robust code. The file hash.c implements a
+simple open hashing library.  Being good library writers, the authors
+also wrote a test program, testHash.c.
+
+Build the testHash program ("make testHash"), run it, and study the
+source.  The hash.c code passes the test suite but has at least 5
+serious bugs.  Can you find them without looking at the answers in
+hash.c_afterpure?  Are there others even we haven't found?  Build the
+program testHash.pure ("make testHash.pure") to see how Purify finds
+lurking errors.  
+
+Chapters 5 and 6 of the manual walk through this program,
+and how to find and correct testHash's errors.
+
+hello_world:
+The hello_world.c example, to be used in conjunction with Chapter 4 -
+Purifying Hello World, shows a typical report from a Purify'd program.
+There are errors in this program that are not at all obvious. The
+template hello_world.Makefile can be tailored to incorporate purify'd
+targets of your code.
+
+Send us mail at support@pure.com.  Have fun.
+
+
+
+	
+

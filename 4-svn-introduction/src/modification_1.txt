@@ -1,0 +1,20 @@
+mp3.h :
+
+// affiche les entrées de la bibliothèque
+// retourne le nombre d'entrées affichées
+int repertAffiche(Mp3Lib *repert);
+
+
+mp3.c :
+
+static int ficheAffiche(Mp3Entry* entry){
+
+    printf ("Le titre \"%s\" est de %s (album %s, annee %d).\n",
+                entry->title, entry->artist, entry->album,entry->year);
+    
+    return(0);
+}
+
+int repertAffiche(Mp3Lib *repert){
+// a vous d'écrire le code
+}

@@ -1,0 +1,9 @@
+# Sample makefile template
+# May also be Used in Purifying Hello World
+# Use make -f hello_world.Makefile.simple a.out.pure
+
+a.out: hello_world.c
+	 cc -g -o $@ $?
+
+a.out.pure: hello_world.c
+	 purify cc -g -o $@ $?
